@@ -1,15 +1,15 @@
-package io.github.edgardobarriam.kotlin_for_android_developers.activities
+package io.github.edgardobarriam.kotlin_for_android_developers.ui.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import io.github.edgardobarriam.kotlin_for_android_developers.Forecast
 import io.github.edgardobarriam.kotlin_for_android_developers.R
-import io.github.edgardobarriam.kotlin_for_android_developers.Request
-import io.github.edgardobarriam.kotlin_for_android_developers.adapters.ForecastListAdapter
+import io.github.edgardobarriam.kotlin_for_android_developers.data.Coordinates
+import io.github.edgardobarriam.kotlin_for_android_developers.data.ForecastRequest
+import io.github.edgardobarriam.kotlin_for_android_developers.domain.commands.RequestForecastCommand
+import io.github.edgardobarriam.kotlin_for_android_developers.ui.adapters.ForecastListAdapter
 import org.jetbrains.anko.*
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,19 +28,16 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerViewForecastList : RecyclerView = find(R.id.recyclerViewForecastList)
         recyclerViewForecastList.layoutManager = LinearLayoutManager(this)
-        recyclerViewForecastList.adapter = ForecastListAdapter(items)
-
-        val url = "http://api.openweathermap.org/data/2.5/forecast/daily?" +
-                "id=3874960&APPID=7b395ffdfd76eb4cc5137f557a42b4bf"
 
         doAsync {
-            Request(url).run()
-            uiThread { longToast("Request performed") }
+            val result = RequestForecastCommand("94043").execute()
+            uiThread {
+                recyclerViewForecastList.adapter = ForecastListAdapter(result)
+            }
         }
 
-        val myForecast = Forecast(Date(), 27.5F, "Shiny Day")
-        val (date, temperature, details) = myForecast   // destructuring
+        val myCoordinates = Coordinates(1.2F, 1.5F)
+        val (lat, lon) = myCoordinates   // destructuring
 
-        // toast(R.string.hello_world)
     }
 }
