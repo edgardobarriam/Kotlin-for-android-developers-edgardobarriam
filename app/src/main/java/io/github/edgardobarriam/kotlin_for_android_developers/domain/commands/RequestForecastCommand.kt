@@ -1,6 +1,6 @@
 package io.github.edgardobarriam.kotlin_for_android_developers.domain.commands
 
-import io.github.edgardobarriam.kotlin_for_android_developers.ForecastDataMapper
+import io.github.edgardobarriam.kotlin_for_android_developers.domain.mappers.ForecastDataMapper
 import io.github.edgardobarriam.kotlin_for_android_developers.data.ForecastRequest
 import io.github.edgardobarriam.kotlin_for_android_developers.domain.model.ForecastList
 

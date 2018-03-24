@@ -8,6 +8,7 @@ import io.github.edgardobarriam.kotlin_for_android_developers.R
 import io.github.edgardobarriam.kotlin_for_android_developers.data.Coordinates
 import io.github.edgardobarriam.kotlin_for_android_developers.data.ForecastRequest
 import io.github.edgardobarriam.kotlin_for_android_developers.domain.commands.RequestForecastCommand
+import io.github.edgardobarriam.kotlin_for_android_developers.domain.model.Forecast
 import io.github.edgardobarriam.kotlin_for_android_developers.ui.adapters.ForecastListAdapter
 import org.jetbrains.anko.*
 
@@ -32,7 +33,12 @@ class MainActivity : AppCompatActivity() {
         doAsync {
             val result = RequestForecastCommand("94043").execute()
             uiThread {
-                recyclerViewForecastList.adapter = ForecastListAdapter(result)
+                recyclerViewForecastList.adapter = ForecastListAdapter(result,
+                        object : ForecastListAdapter.OnItemClickListener{
+                            override fun invoke(forecast: Forecast) {
+                                toast(forecast.date)
+                            }
+                        })
             }
         }
 
