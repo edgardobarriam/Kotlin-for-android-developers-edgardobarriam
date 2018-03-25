@@ -7,7 +7,7 @@ import io.github.edgardobarriam.kotlin_for_android_developers.domain.model.Forec
 /**
  * Created by edgar on 22-03-2018.
  */
-class RequestForecastCommand(val zipCode: String) : Command<ForecastList>{
+class RequestForecastCommand(private val zipCode: String) : Command<ForecastList>{
 
     override fun execute(): ForecastList {
         val forecastRequest = ForecastRequest(zipCode)
