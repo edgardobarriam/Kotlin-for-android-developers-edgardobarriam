@@ -12,6 +12,7 @@ import io.github.edgardobarriam.kotlin_for_android_developers.domain.model.Forec
 import io.github.edgardobarriam.kotlin_for_android_developers.domain.model.ForecastList
 import io.github.edgardobarriam.kotlin_for_android_developers.ui.utils.ctx
 import org.jetbrains.anko.find
+import kotlinx.android.synthetic.main.item_forecast.view.*
 
 /**
  * Created by edgar on 22-03-2018.
@@ -33,20 +34,16 @@ class ForecastListAdapter(val weekForecast: ForecastList,
 
     override fun getItemCount() = weekForecast.size
 
-    class ViewHolder(view: View, val itemClick: (Forecast) -> Unit) : RecyclerView.ViewHolder(view) {
-        private val iconView = view.find<ImageView>(R.id.icon)
-        private val dateView = view.find<TextView>(R.id.date)
-        private val descriptionView = view.find<TextView>(R.id.description)
-        private val maxTemperatureView = view.find<TextView>(R.id.maxTemperature)
-        private val minTemperatureView = view.find<TextView>(R.id.minTemperature)
+    class ViewHolder(view: View, val itemClick: (Forecast) -> Unit) :
+            RecyclerView.ViewHolder(view) {
 
         fun bindForecast(forecast: Forecast) {
             with(forecast) {
-                Picasso.get().load(iconUrl).into(iconView)
-                dateView.text = date
-                descriptionView.text = description
-                maxTemperatureView.text = "$high"
-                minTemperatureView.text = "$low"
+                Picasso.get().load(iconUrl).into(itemView.icon)
+                itemView.date.text = date
+                itemView.description.text = description
+                itemView.maxTemperature.text = "$high"
+                itemView.minTemperature.text = "$low"
                 itemView.setOnClickListener { itemClick(this) }
             }
         }
