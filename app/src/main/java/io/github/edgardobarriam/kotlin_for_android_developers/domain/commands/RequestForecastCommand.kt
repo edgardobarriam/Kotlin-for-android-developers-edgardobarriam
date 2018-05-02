@@ -1,17 +1,19 @@
 package io.github.edgardobarriam.kotlin_for_android_developers.domain.commands
 
-import io.github.edgardobarriam.kotlin_for_android_developers.domain.mappers.ForecastDataMapper
-import io.github.edgardobarriam.kotlin_for_android_developers.data.ForecastRequest
+import io.github.edgardobarriam.kotlin_for_android_developers.domain.datasource.ForecastProvider
 import io.github.edgardobarriam.kotlin_for_android_developers.domain.model.ForecastList
 
 /**
  * Created by edgar on 22-03-2018.
  */
-class RequestForecastCommand(private val zipCode: String) : Command<ForecastList>{
+class RequestForecastCommand(
+        private val zipCode: Long,
+        private val forecastProvider: ForecastProvider = ForecastProvider())
+        : Command<ForecastList> {
 
-    override fun execute(): ForecastList {
-        val forecastRequest = ForecastRequest(zipCode)
-        return ForecastDataMapper().convertFromDataModel(forecastRequest.execute())
+    companion object {
+        val DAYS = 7
     }
 
+    override fun execute(): ForecastList = forecastProvider.requestByZipCode(zipCode, DAYS)
 }

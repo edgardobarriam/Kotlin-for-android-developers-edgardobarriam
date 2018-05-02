@@ -1,5 +1,6 @@
 package io.github.edgardobarriam.kotlin_for_android_developers.data.db
 
+import io.github.edgardobarriam.kotlin_for_android_developers.domain.datasource.ForecastDataSource
 import io.github.edgardobarriam.kotlin_for_android_developers.domain.model.ForecastList
 import io.github.edgardobarriam.kotlin_for_android_developers.extensions.clear
 import org.jetbrains.anko.db.select
@@ -9,9 +10,10 @@ import io.github.edgardobarriam.kotlin_for_android_developers.extensions.toVarar
 import org.jetbrains.anko.db.insert
 
 class ForecastDb (val forecastDbHelper: ForecastDbHelper = ForecastDbHelper.instance,
-                  val dataMapper: DbDataMapper = DbDataMapper() ) {
+                  val dataMapper: DbDataMapper = DbDataMapper() )
+                  : ForecastDataSource {
 
-    fun requestForecastByZipCode(zipCode: Long, date: Long) = forecastDbHelper.use{
+    override fun requestForecastByZipCode(zipCode: Long, date: Long) = forecastDbHelper.use{
         val dailyRequest = "${DayForecastTable.CITY_ID} = ? AND ${DayForecastTable.DATE} >= ?"
         val dailyForecast = select(DayForecastTable.NAME)
                 .whereSimple(dailyRequest, zipCode.toString(), date.toString() )
