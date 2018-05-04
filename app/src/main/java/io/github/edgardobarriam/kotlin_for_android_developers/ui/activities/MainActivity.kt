@@ -21,10 +21,10 @@ class MainActivity : AppCompatActivity() {
         recyclerViewForecastList.layoutManager = LinearLayoutManager(this)
 
         doAsync {
-            val result = RequestForecastCommand("94043").execute()
+            val result = RequestForecastCommand(94043).execute()
             uiThread {
                 recyclerViewForecastList.adapter = ForecastListAdapter(result) {
-                    toast(it.date)
+                    toast(it.date.toString())
                 }
             }
         }
