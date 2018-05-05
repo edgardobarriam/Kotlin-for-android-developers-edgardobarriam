@@ -1,17 +1,16 @@
 package io.github.edgardobarriam.kotlin_for_android_developers.data.db
 
 import io.github.edgardobarriam.kotlin_for_android_developers.domain.datasource.ForecastDataSource
+import io.github.edgardobarriam.kotlin_for_android_developers.domain.model.Forecast
 import io.github.edgardobarriam.kotlin_for_android_developers.domain.model.ForecastList
-import io.github.edgardobarriam.kotlin_for_android_developers.extensions.clear
+import io.github.edgardobarriam.kotlin_for_android_developers.extensions.*
 import org.jetbrains.anko.db.select
-import  io.github.edgardobarriam.kotlin_for_android_developers.extensions.parseList
-import io.github.edgardobarriam.kotlin_for_android_developers.extensions.parseOpt
-import io.github.edgardobarriam.kotlin_for_android_developers.extensions.toVarargArray
 import org.jetbrains.anko.db.insert
 
 class ForecastDb (val forecastDbHelper: ForecastDbHelper = ForecastDbHelper.instance,
                   val dataMapper: DbDataMapper = DbDataMapper() )
                   : ForecastDataSource {
+
 
     override fun requestForecastByZipCode(zipCode: Long, date: Long) = forecastDbHelper.use{
         val dailyRequest = "${DayForecastTable.CITY_ID} = ? AND ${DayForecastTable.DATE} >= ?"
@@ -25,6 +24,12 @@ class ForecastDb (val forecastDbHelper: ForecastDbHelper = ForecastDbHelper.inst
 
         // Last line inside a lambda represents what the lambda returns
         if (city != null) dataMapper.convertToDomain(city) else null
+    }
+
+    override fun requestDayForecast(id: Long): Forecast? = forecastDbHelper.use {
+        val forecast = select(DayForecastTable.NAME).byId(id).
+                parseOpt { DayForecast(HashMap(it))}
+        if (forecast != null) dataMapper.convertDayToDomain(forecast) else null
     }
 
     fun saveForecast(forecast: ForecastList) = forecastDbHelper.use {

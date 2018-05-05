@@ -10,6 +10,7 @@ import com.squareup.picasso.Picasso
 import io.github.edgardobarriam.kotlin_for_android_developers.R
 import io.github.edgardobarriam.kotlin_for_android_developers.domain.model.Forecast
 import io.github.edgardobarriam.kotlin_for_android_developers.domain.model.ForecastList
+import io.github.edgardobarriam.kotlin_for_android_developers.extensions.toDateString
 import io.github.edgardobarriam.kotlin_for_android_developers.ui.utils.ctx
 import org.jetbrains.anko.find
 import kotlinx.android.synthetic.main.item_forecast.view.*
@@ -40,7 +41,7 @@ class ForecastListAdapter(val weekForecast: ForecastList,
         fun bindForecast(forecast: Forecast) {
             with(forecast) {
                 Picasso.get().load(iconUrl).into(itemView.icon)
-                itemView.date.text = date
+                itemView.date.text = date.toDateString()
                 itemView.description.text = description
                 itemView.maxTemperature.text = "$high"
                 itemView.minTemperature.text = "$low"

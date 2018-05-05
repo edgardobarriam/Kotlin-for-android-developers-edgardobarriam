@@ -9,6 +9,7 @@ import io.github.edgardobarriam.kotlin_for_android_developers.domain.commands.Re
 import io.github.edgardobarriam.kotlin_for_android_developers.ui.adapters.ForecastListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 
@@ -24,7 +25,8 @@ class MainActivity : AppCompatActivity() {
             val result = RequestForecastCommand(94043).execute()
             uiThread {
                 recyclerViewForecastList.adapter = ForecastListAdapter(result) {
-                    toast(it.date.toString())
+                    startActivity<DetailActivity>(DetailActivity.ID to it.id,
+                            DetailActivity.CITY_NAME to result.city)
                 }
             }
         }

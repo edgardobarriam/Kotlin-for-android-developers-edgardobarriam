@@ -1,13 +1,11 @@
 package io.github.edgardobarriam.kotlin_for_android_developers
 
 import android.app.Activity
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 
 fun flowControlAndRanges() {
 
