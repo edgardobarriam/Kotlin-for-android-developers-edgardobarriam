@@ -23,13 +23,13 @@ class ForecastDb (val forecastDbHelper: ForecastDbHelper = ForecastDbHelper.inst
                 .parseOpt { CityForecast(HashMap(it), dailyForecast) }
 
         // Last line inside a lambda represents what the lambda returns
-        if (city != null) dataMapper.convertToDomain(city) else null
+        city?.let { dataMapper.convertToDomain(it)}
     }
 
     override fun requestDayForecast(id: Long): Forecast? = forecastDbHelper.use {
         val forecast = select(DayForecastTable.NAME).byId(id).
                 parseOpt { DayForecast(HashMap(it))}
-        if (forecast != null) dataMapper.convertDayToDomain(forecast) else null
+        forecast?.let { dataMapper.convertDayToDomain(it) }
     }
 
     fun saveForecast(forecast: ForecastList) = forecastDbHelper.use {
