@@ -8,6 +8,7 @@ import io.github.edgardobarriam.kotlin_for_android_developers.extensions.slideEn
 import io.github.edgardobarriam.kotlin_for_android_developers.extensions.slideExit
 import io.github.edgardobarriam.kotlin_for_android_developers.ui.App
 import io.github.edgardobarriam.kotlin_for_android_developers.ui.utils.ctx
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 interface ToolbarManager {
@@ -22,7 +23,7 @@ interface ToolbarManager {
         toolbar.inflateMenu(R.menu.menu_main)
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.action_settings -> App.instance.toast("Settings")
+                R.id.action_settings -> toolbar.ctx.startActivity<SettingsActivity>()
                 else -> App.instance.toast("Unkown Option")
             }
             true
