@@ -11,6 +11,7 @@ import io.github.edgardobarriam.kotlin_for_android_developers.domain.model.Forec
 import io.github.edgardobarriam.kotlin_for_android_developers.extensions.color
 import io.github.edgardobarriam.kotlin_for_android_developers.extensions.toDateString
 import kotlinx.android.synthetic.main.activity_detail.*
+import org.jetbrains.anko.custom.async
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.find
 import org.jetbrains.anko.textColor
